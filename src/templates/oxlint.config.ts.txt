@@ -1,0 +1,39 @@
+import { defineConfig } from "oxlint";
+import antiSlop from "ultracite/oxlint/anti-slop";
+import core from "ultracite/oxlint/core";
+import next from "ultracite/oxlint/next";
+import react from "ultracite/oxlint/react";
+{{shadcnImport}}
+
+export default defineConfig({
+  extends: [core, react, next{{shadcnExtend}}, antiSlop],
+  ignorePatterns: [...(core.ignorePatterns ?? []), "**/.claude/**", "**/.agents/**", "**/drizzle/**", "**/.drizzle/**", "**/components/ui/**"],
+  {{shadcnJsPlugins}}categories: {
+    correctness: "error",
+  },
+  env: {
+    builtin: true,
+    browser: true,
+    node: true,
+    es2024: true,
+  },
+  rules: {
+    "react/no-multi-comp": "error",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "unicorn/no-new-array": "off",
+    "func-style": "off",
+    "react/function-component-definition": "off",
+    "sort-keys": "off",
+    "typescript/consistent-type-definitions": "off",
+    "react/hook-use-state": "off",
+  },
+  overrides: [
+    {
+      files: ["**/lib/hooks/use-mobile.ts"],
+      rules: {
+        "react/set-state-in-effect": "off",
+        "unicorn/no-useless-undefined": "off",
+      },
+    },
+  ],
+});

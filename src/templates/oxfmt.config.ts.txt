@@ -1,0 +1,46 @@
+import { defineConfig, type SortImportsConfig } from "oxfmt";
+import ultracite from "ultracite/oxfmt";
+
+const inheritedSortImports: SortImportsConfig =
+  ultracite.sortImports === true || !ultracite.sortImports ? {} : ultracite.sortImports;
+
+export default defineConfig({
+  ...ultracite,
+  printWidth: 100,
+  singleQuote: true,
+  semi: false,
+  trailingComma: "none",
+  sortImports: {
+    ...inheritedSortImports,
+    newlinesBetween: false,
+    customGroups: [{ groupName: "wildcard", modifiers: ["wildcard"] }],
+    groups: [
+      "wildcard",
+      "builtin",
+      "type",
+      "external",
+      ["internal", "subpath"],
+      "style",
+      "unknown",
+      ["parent", "sibling", "index"],
+    ],
+  },
+  sortPackageJson: true,
+  sortTailwindcss: {
+    stylesheet: "./app/globals.css",
+    functions: ["cn", "clsx", "cva", "tv"],
+  },
+  ignorePatterns: [
+    ...(ultracite.ignorePatterns ?? []),
+    "**/*.css",
+    "**/*.scss",
+    "**/*.md",
+    "**/*.mdx",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.html",
+    "**/.claude/**",
+    "**/.agents/**",
+    "**/*.tsbuildinfo",
+  ],
+});
