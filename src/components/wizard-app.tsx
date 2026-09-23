@@ -6,6 +6,7 @@ import { iconLibraries } from "@/lib/icon-library";
 import { packageManagers } from "@/lib/package-manager";
 import { palette } from "@/lib/palette";
 import { shadcnPresets } from "@/lib/shadcn-presets";
+import { version } from "@/lib/version";
 import { AnsweredRow } from "@/components/answered-row";
 import { ConfirmPrompt } from "@/components/confirm-prompt";
 import { FeaturesPrompt } from "@/components/features-prompt";
@@ -87,7 +88,10 @@ export function WizardApp({ initialName, cwd, dryRun }: WizardAppProps) {
         flexDirection="column"
       >
         <ascii-font text="skaff" font="block" color={palette.accent} />
-        <text fg={palette.muted}>Interactive Batteries included Next.js website scaffolder{dryRun ? " · --dry-run" : ""}</text>
+        <text fg={palette.muted}>
+          Interactive Batteries included Next.js website scaffolder · v{version}
+          {dryRun ? " · --dry-run" : ""}
+        </text>
       </box>
       {answered("name") ? <AnsweredRow label="Project name" value={name} /> : null}
       {answered("packageManager") ? <AnsweredRow label="Package manager" value={packageManager} /> : null}

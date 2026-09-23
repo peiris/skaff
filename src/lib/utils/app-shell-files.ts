@@ -2,6 +2,7 @@ import { basename } from "node:path";
 import { fontMeta } from "@/lib/font";
 import { packageManagerCommands } from "@/lib/package-manager";
 import { projectDir } from "@/lib/scaffold-config";
+import { ctaLinkSource } from "@/lib/utils/cta-link-source";
 import type { FileMap } from "@/types/file-map";
 import type { ScaffoldConfig } from "@/types/scaffold-config";
 
@@ -104,12 +105,12 @@ export function QueryProvider({ children }: QueryProviderProps) {
 }
 `;
 
-const pageSource = `import { SectionHero } from "@/components/section-hero";
+const pageSource = `import { SkaffOverview } from "@/components/skaff/skaff-overview";
 
 export default function HomePage() {
   return (
     <main className="flex flex-1 flex-col">
-      <SectionHero />
+      <SkaffOverview />
     </main>
   );
 }
@@ -145,15 +146,7 @@ export function ErrorPage({ code, title, description, children }: ErrorPageProps
           </div>
           <div className="flex flex-wrap gap-3">
             {children}
-            ${
-              shadcn
-                ? `<Button variant="outline" nativeButton={false} render={<Link href="/" />}>
-              Go home
-            </Button>`
-                : `<Link href="/" className="rounded-md border px-4 py-2 text-sm font-medium">
-              Go home
-            </Link>`
-            }
+            ${ctaLinkSource(shadcn, { href: "/", label: "Go home", variant: "outline" })}
           </div>
         </SectionContainer>
       </section>
@@ -240,37 +233,6 @@ export function SectionContainer({ children, className }: SectionContainerProps)
 }
 `;
 
-const heroSource = (shadcn: boolean, motion: boolean) => {
-  const wrap = (inner: string) => (motion ? `<MotionReveal>\n          ${inner}\n        </MotionReveal>` : inner);
-  const cta = shadcn
-    ? `<Button nativeButton={false} render={<Link href="#" />}>
-            Get started
-          </Button>`
-    : `<Link href="#" className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background">
-              Get started
-            </Link>`;
-  return `${shadcn ? 'import { Button } from "@/components/ui/button";\n' : ""}${motion ? 'import { MotionReveal } from "@/components/motion-reveal";\n' : ""}import { SectionContainer } from "@/components/section-container";
-import { site } from "@/lib/site";
-import Link from "next/link";
-
-export function SectionHero() {
-  return (
-    <section className="py-24 md:py-32">
-      <SectionContainer className="flex flex-col items-start gap-6">
-        ${wrap(`<div className="flex flex-col gap-4">
-            <h1 className="max-w-2xl font-heading text-4xl font-semibold tracking-tight text-balance md:text-5xl">{site.tagline}</h1>
-            <p className="max-w-xl text-lg text-muted-foreground">{site.description}</p>
-          </div>`)}
-        <div className="flex flex-wrap gap-3">
-          ${cta}
-        </div>
-      </SectionContainer>
-    </section>
-  );
-}
-`;
-};
-
 const motionRevealSource = `"use client";
 
 import { motion, useReducedMotion } from "motion/react";
@@ -316,7 +278,6 @@ export function appShellFiles(config: ScaffoldConfig): FileMap {
     "app/global-error.tsx": globalErrorSource(fontMeta[config.font].googleExport, shadcn),
     "components/error-page.tsx": errorPageSource(shadcn),
     "components/section-container.tsx": sectionContainerSource(shadcn),
-    "components/section-hero.tsx": heroSource(shadcn, motion),
     ...(motion ? { "components/motion-reveal.tsx": motionRevealSource } : {}),
     ...(shadcn ? { "components/providers/theme-provider.tsx": themeProviderSource } : {}),
     ...(config.features.has("tanstackQuery") ? { "components/providers/query-provider.tsx": queryProviderSource } : {}),

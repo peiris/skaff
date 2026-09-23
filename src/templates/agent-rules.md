@@ -120,7 +120,7 @@ Empty samples prove nothing about a field's shape. Type fields for the data they
 
 ### A page is a list of sections
 
-`app/**/page.tsx` holds metadata and a `<main className="flex flex-1 flex-col">` containing section components, nothing else — no markup, no data fetching, no state. Each section is `components/section-<name>.tsx`, one per file, and `components/section-hero.tsx` is the reference: copy its shape (a `<section>` with vertical padding wrapping a `SectionContainer`) rather than inventing a new one. A landing page draws from this vocabulary before adding a new word: `hero`, `logos`, `features`, `how-it-works`, `testimonials`, `pricing`, `faq`, `cta`, `footer`. "Minimal" means `hero` plus at most two more.
+`app/**/page.tsx` holds metadata and a `<main className="flex flex-1 flex-col">` containing section components, nothing else — no markup, no data fetching, no state. Each section is `components/section-<name>.tsx`, one per file, shaped as a `<section>` with vertical padding wrapping a `SectionContainer`; copy that shape rather than inventing a new one. A landing page draws from this vocabulary before adding a new word: `hero`, `logos`, `features`, `how-it-works`, `testimonials`, `pricing`, `faq`, `cta`, `footer`. "Minimal" means `hero` plus at most two more.
 
 ### Error pages go through the file conventions
 

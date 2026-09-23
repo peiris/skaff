@@ -3,6 +3,7 @@ import { iconLibraryMeta } from "@/lib/icon-library";
 import { packageManagerCommands } from "@/lib/package-manager";
 import { projectDir } from "@/lib/scaffold-config";
 import { shadcnPresetUrl } from "@/lib/shadcn-presets";
+import { addBaseTokens } from "@/lib/utils/add-base-tokens";
 import { addThemeTokens } from "@/lib/utils/add-theme-tokens";
 import { addTypecheckScript } from "@/lib/utils/add-typecheck-script";
 import { addTypographyPlugin } from "@/lib/utils/add-typography-plugin";
@@ -14,6 +15,7 @@ import { configureShadcn } from "@/lib/utils/configure-shadcn";
 import { createLibDirs } from "@/lib/utils/create-lib-dirs";
 import { extendGitignore } from "@/lib/utils/extend-gitignore";
 import { fixFontSansVariable } from "@/lib/utils/fix-font-sans-variable";
+import { landingFiles } from "@/lib/utils/landing-files";
 import { patchSidebarSkeleton } from "@/lib/utils/patch-sidebar-skeleton";
 import { removeSampleAssets } from "@/lib/utils/remove-sample-assets";
 import { runCommand } from "@/lib/utils/run-command";
@@ -126,9 +128,15 @@ export function buildScaffoldSteps(config: ScaffoldConfig): ScaffoldStep[] {
       "App shell",
       sequence(
         files(appShellFiles(config)),
+        files(landingFiles(config)),
         write("remove sample SVGs and app/page.tsx", () => removeSampleAssets(dir)),
         write("add typecheck script to package.json", () => addTypecheckScript(dir)),
-        ...(shadcn ? [] : [write("point app/globals.css at --font-sans", () => fixFontSansVariable(dir))]),
+        ...(shadcn
+          ? []
+          : [
+              write("point app/globals.css at --font-sans", () => fixFontSansVariable(dir)),
+              write("add muted, border and font-heading tokens to app/globals.css", () => addBaseTokens(dir)),
+            ]),
       ),
     ),
     ...(has("auth")
