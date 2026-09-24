@@ -22,6 +22,7 @@ export function scaffoldManifest(config: ScaffoldConfig): ScaffoldManifest {
   const pm = packageManagerCommands[config.packageManager];
   const run = pm.run;
   const dlx = pm.dlx.join(" ");
+  const exec = pm.exec.join(" ");
 
   const choices: ManifestChoice[] = [
     { label: "Package manager", value: config.packageManager },
@@ -62,6 +63,7 @@ export function scaffoldManifest(config: ScaffoldConfig): ScaffoldManifest {
         ]
       : []),
     { name: "Ultracite", role: "Oxlint and Oxfmt with anti-slop rules", url: "https://ultracite.ai" },
+    { name: "agent-browser", role: "Browser automation CLI that coding agents use to load and test pages", url: "https://agent-browser.dev" },
   ];
 
   const only = (enabled: boolean, nodes: ManifestTreeNode[]) => (enabled ? nodes : []);
@@ -117,7 +119,7 @@ export function scaffoldManifest(config: ScaffoldConfig): ScaffoldManifest {
     { name: "types/", purpose: "Shared types" },
     ...only(auth, [{ name: "proxy.ts", purpose: "Cookie check that redirects between /sign-in and /dashboard before the page renders" }]),
     { name: "next.config.ts", purpose: `cacheComponents and authInterrupts on${auth ? "; wrapped in withEmulate for the OAuth emulators" : ""}` },
-    { name: "AGENTS.md", purpose: "Rules for coding agents; CLAUDE.md points at it and .claude/settings.json pre-approves the scripts" },
+    { name: "AGENTS.md", purpose: "Rules for coding agents; CLAUDE.md points at it and .claude/settings.json pre-approves the scripts and agent-browser" },
   ];
 
   const scripts = [
@@ -136,14 +138,14 @@ export function scaffoldManifest(config: ScaffoldConfig): ScaffoldManifest {
     ...(auth
       ? [{ title: "Try sign-in", detail: "Open /sign-in and pick a seeded account. Real providers: put credentials in .env.local and set AUTH_EMULATE=false (see README)." }]
       : []),
-    { title: "Point agents at the rules", detail: "AGENTS.md holds the project rules; skills are installed under .agents/ and .claude/." },
+    { title: "Point agents at the rules", detail: "AGENTS.md holds the project rules; skills are installed under .agents/ and .claude/. Agents test pages with agent-browser, not Playwright." },
     { title: "Remove this page", detail: landingRemoval },
   ];
 
   return {
     name: config.name === "." ? basename(projectDir(config)) : config.name,
     version,
-    packageManager: { name: config.packageManager, run, dlx },
+    packageManager: { name: config.packageManager, run, dlx, exec },
     choices,
     stack,
     tree,

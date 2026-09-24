@@ -256,9 +256,13 @@ export function MotionReveal({ children, className, delay = 0 }: MotionRevealPro
 }
 `;
 
-const claudeSettingsSource = (run: string) =>
+const claudeSettingsSource = (run: string, exec: string) =>
   `${JSON.stringify(
-    { permissions: { allow: ["check", "fix", "typecheck", "build"].map((script) => `Bash(${run} ${script}*)`) } },
+    {
+      permissions: {
+        allow: [...["check", "fix", "typecheck", "build"].map((script) => `Bash(${run} ${script}*)`), `Bash(${exec} agent-browser*)`, "Bash(agent-browser*)"],
+      },
+    },
     null,
     2,
   )}\n`;
@@ -283,6 +287,6 @@ export function appShellFiles(config: ScaffoldConfig): FileMap {
     ...(config.features.has("tanstackQuery") ? { "components/providers/query-provider.tsx": queryProviderSource } : {}),
     "next.config.ts": nextConfigSource(config.features.has("auth")),
     "lib/site.ts": siteSource(name),
-    ".claude/settings.json": claudeSettingsSource(packageManagerCommands[config.packageManager].run),
+    ".claude/settings.json": claudeSettingsSource(packageManagerCommands[config.packageManager].run, packageManagerCommands[config.packageManager].exec.join(" ")),
   };
 }

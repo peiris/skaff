@@ -18,6 +18,7 @@ export async function writeAgentConfig(projectDir: string, config: ScaffoldConfi
   const fill = (template: string) =>
     template
       .replaceAll("{{dlx}}", pm.dlx.join(" "))
+      .replaceAll("{{exec}}", pm.exec.join(" "))
       .replaceAll("{{shadcnStyle}}", `base-${config.shadcnPreset}`)
       .replaceAll("{{run}}", pm.run);
   const rules = [

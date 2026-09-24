@@ -26,9 +26,13 @@ Look up only what the edit can't be written without, then write it.
 
 `components/ui` wraps Base UI. Before adding/changing behaviour (open/close, hover/focus, positioning, delays, keyboard nav, typeahead, portals, animation state, form wiring), read `node_modules/@base-ui/react/docs/react/components/` and `.../handbook/` — it's almost always an existing prop, part, or data attribute. Same for Next.js: read `node_modules/next/dist/docs/` before hand-rolling navigation, caching, data loading, metadata, redirects, image/font handling. Don't trust memory of either API — read the file. Custom implementations only after docs prove the built-in can't, noted in one line.
 
+### Browser checks go through agent-browser
+
+`agent-browser` is installed as a dev dependency and its skill is under `.claude/skills/agent-browser`. Any check that needs a browser — loading a page, clicking through a flow, screenshots, responsive checks, form submission — runs through `{{exec}} agent-browser`, never through Playwright, Puppeteer, a browser MCP, or the user's own browser. Before the first command in a session run `{{exec}} agent-browser skills get core` and follow it: `open` the dev server URL, `snapshot` for `@eN` refs, interact by ref, `screenshot` to an absolute path outside the repo. Close the session when done.
+
 ### Verification never writes into the repo
 
-All check by-products (screenshots, snapshots, logs, scratch scripts, sample payloads) go in a temp dir outside the tree — never repo root, `.playwright-mcp/`, or `screenshots/`. Always pass tools an absolute path outside the repo. Delete artifacts when done (`.gitignore` is not cleanup). Only requested files remain.
+All check by-products (screenshots, snapshots, logs, scratch scripts, sample payloads) go in a temp dir outside the tree — never repo root, `.agent-browser/`, `.playwright-mcp/`, or `screenshots/`. Always pass tools an absolute path outside the repo. Delete artifacts when done (`.gitignore` is not cleanup). Only requested files remain.
 
 ## Git
 

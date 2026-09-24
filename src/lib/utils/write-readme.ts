@@ -16,7 +16,7 @@ const layoutRows = (nodes: ManifestTreeNode[], prefix = ""): string[] =>
 export async function writeReadme(config: ScaffoldConfig): Promise<void> {
   const dir = projectDir(config);
   const manifest = scaffoldManifest(config);
-  const { run, dlx } = manifest.packageManager;
+  const { run, dlx, exec } = manifest.packageManager;
   const shadcn = config.features.has("shadcn");
 
   const authSection = manifest.auth
@@ -102,6 +102,8 @@ ${dlx} shadcn@latest add <component>
 ## AI agents
 
 Project rules for coding agents live in \`AGENTS.md\`. \`CLAUDE.md\` points at it. \`.claude/settings.json\` pre-approves the check, fix, typecheck and build scripts so agents can verify without prompts. Skills are installed under \`.agents/\` and \`.claude/\` via [skills.sh](https://skills.sh).
+
+Browser checks run through [agent-browser](https://agent-browser.dev), installed as a dev dependency with Chrome for Testing downloaded by \`agent-browser install\`. Agents load \`${exec} agent-browser skills get core\` and drive the dev server from there instead of Playwright or a local browser.
 `;
 
   await writeFile(join(dir, "README.md"), readme);

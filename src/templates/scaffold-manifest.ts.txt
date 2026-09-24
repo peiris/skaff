@@ -13,7 +13,7 @@ export type ManifestAuthProvider = { id: string; label: string; console: string;
 export type ScaffoldManifest = {
   name: string;
   version: string;
-  packageManager: { name: string; run: string; dlx: string };
+  packageManager: { name: string; run: string; dlx: string; exec: string };
   choices: ManifestChoice[];
   stack: ManifestStackEntry[];
   tree: ManifestTreeNode[];

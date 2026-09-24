@@ -7,7 +7,7 @@ import { addBaseTokens } from "@/lib/utils/add-base-tokens";
 import { addThemeTokens } from "@/lib/utils/add-theme-tokens";
 import { addTypecheckScript } from "@/lib/utils/add-typecheck-script";
 import { addTypographyPlugin } from "@/lib/utils/add-typography-plugin";
-import { allowSqliteBuild } from "@/lib/utils/allow-sqlite-build";
+import { allowPnpmBuild } from "@/lib/utils/allow-pnpm-build";
 import { appShellFiles } from "@/lib/utils/app-shell-files";
 import { appendAuthEnv } from "@/lib/utils/append-auth-env";
 import { authFiles } from "@/lib/utils/auth-files";
@@ -91,7 +91,7 @@ export function buildScaffoldSteps(config: ScaffoldConfig): ScaffoldStep[] {
           [...pm.dlx, "create-next-app@latest", config.name, "--ts", "--tailwind", "--app", "--no-src-dir", "--import-alias", "@/*", "--yes", pm.createNextFlag],
           config.cwd,
         ),
-        write("extend .gitignore", () => extendGitignore(dir, [{ comment: "# playwright mcp", patterns: ["/.playwright-mcp/"] }])),
+        write("extend .gitignore", () => extendGitignore(dir, [{ comment: "# browser automation", patterns: ["/.playwright-mcp/", "/.agent-browser/"] }])),
         write("create lib/hooks, lib/utils, lib/actions, types", () => createLibDirs(dir)),
       ),
     ),
@@ -145,7 +145,7 @@ export function buildScaffoldSteps(config: ScaffoldConfig): ScaffoldStep[] {
             "auth",
             "Better Auth (Google + GitHub, emulated locally, member dashboard)",
             sequence(
-              ...(config.packageManager === "pnpm" ? [write("allow better-sqlite3 build in pnpm-workspace.yaml", () => allowSqliteBuild(dir))] : []),
+              ...(config.packageManager === "pnpm" ? [write("allow better-sqlite3 build in pnpm-workspace.yaml", () => allowPnpmBuild(dir, "better-sqlite3"))] : []),
               command([...pm.add, "better-auth", "better-sqlite3", "@emulators/adapter-next", "@emulators/google", "@emulators/github"]),
               command([...pm.addDev, "@types/better-sqlite3"]),
               files(authFiles(shadcn)),
@@ -187,6 +187,16 @@ export function buildScaffoldSteps(config: ScaffoldConfig): ScaffoldStep[] {
     skillsStep({ id: "next-experimental", repo: "vercel-labs/next.js-experimental", skills: ["*"] }),
     skillsStep({ id: "vercel", repo: "vercel-labs/agent-skills", skills: ["vercel-composition-patterns", "vercel-react-best-practices"] }),
     ...(shadcn ? [skillsStep({ id: "shadcn", repo: "shadcn-ui/ui", skills: ["shadcn"] })] : []),
+    step(
+      "agent-browser",
+      "agent-browser (browser testing for AI agents)",
+      sequence(
+        ...(config.packageManager === "pnpm" ? [write("allow agent-browser build in pnpm-workspace.yaml", () => allowPnpmBuild(dir, "agent-browser"))] : []),
+        command([...pm.addDev, "agent-browser"]),
+        command([...pm.exec, "agent-browser", "install"]),
+        command([...pm.dlx, "skills@latest", "add", "vercel-labs/agent-browser", "--skill", "agent-browser", "--agent", "claude-code", "codex", "-y"]),
+      ),
+    ),
     step("readme", "README.md", write("replace the create-next-app README with a project-specific one", () => writeReadme(config))),
   ];
 }
