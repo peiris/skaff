@@ -1,6 +1,6 @@
 {
   "name": "create-skaff",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Interactive, batteries-included Next.js scaffolder: App Router, TypeScript, Tailwind CSS, shadcn/ui, Motion, Better Auth, Drizzle, Oxlint and Playwright, picked from a terminal UI.",
   "keywords": [
     "create-skaff",
