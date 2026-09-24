@@ -7,6 +7,8 @@
 ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═╝      ╚═╝
 ```
 
+![create-skaff demo: run the command, answer the prompts, then open the generated project in VS Code](demo/skaff-demo.gif)
+
 # create-skaff
 
 **Start a new Next.js app with the boring setup already done.**
