@@ -91,9 +91,6 @@ Using pnpm or bun? `pnpm dlx create-skaff@latest` and `bunx create-skaff@latest`
 - Node.js 26.9 or newer
 - macOS, Linux, or Windows
 
-<details>
-<summary><strong>Full details: every file and package it adds</strong></summary>
-
 ### Always included
 
 - **Next.js** via `create-next-app@latest` — App Router, TypeScript, no `src/` folder, `@/*` import alias
@@ -116,7 +113,85 @@ Using pnpm or bun? `pnpm dlx create-skaff@latest` and `bunx create-skaff@latest`
 
 shadcn/ui presets: Maia, Nova, Vega, Lyra, Mira, Luma, Sera, Rhea.
 
-</details>
+## Project structure
+
+What a generated project looks like with every extra turned on. Entries marked in brackets only appear when that extra is selected.
+
+```
+my-app/
+├── app/
+│   ├── layout.tsx                          root layout: font, metadata, providers
+│   ├── globals.css                         Tailwind import and @theme tokens
+│   ├── not-found.tsx                       404
+│   ├── error.tsx                           route error boundary with retry
+│   ├── global-error.tsx                    root layout error boundary
+│   ├── forbidden.tsx                       403 for forbidden()
+│   ├── unauthorized.tsx                    401 for unauthorized()
+│   ├── (marketing)/
+│   │   └── page.tsx                        landing page (renders the skaff overview)
+│   ├── (auth)/                             [Better Auth]
+│   │   ├── sign-in/page.tsx
+│   │   └── emulated-sign-in/[provider]/page.tsx
+│   ├── (dashboard)/                        [Better Auth]
+│   │   └── dashboard/page.tsx
+│   └── api/                                [Better Auth]
+│       ├── auth/[...all]/route.ts          Better Auth handler
+│       └── emulate/[...path]/route.ts      local OAuth emulators
+├── components/
+│   ├── section-container.tsx               width and gutter wrapper
+│   ├── error-page.tsx                      shared layout for error routes
+│   ├── motion-reveal.tsx                   [Motion] scroll-in reveal
+│   ├── auth-sign-in-buttons.tsx            [Better Auth]
+│   ├── auth-sign-out-button.tsx            [Better Auth]
+│   ├── auth-signed-in-redirect.tsx         [Better Auth]
+│   ├── dashboard-welcome.tsx               [Better Auth]
+│   ├── emulated-account-picker.tsx         [Better Auth]
+│   ├── providers/
+│   │   ├── theme-provider.tsx              [shadcn/ui] next-themes
+│   │   └── query-provider.tsx              [TanStack Query] client + devtools
+│   ├── ui/                                 [shadcn/ui] all components, managed by the CLI
+│   └── skaff/                              overview landing page, delete when you start building
+│       ├── manifest.ts
+│       ├── skaff-logo.tsx
+│       ├── skaff-overview.tsx
+│       ├── skaff-section.tsx
+│       ├── skaff-hero-section.tsx
+│       ├── skaff-stack-section.tsx
+│       ├── skaff-tree-section.tsx
+│       ├── skaff-tree-node.tsx
+│       ├── skaff-scripts-section.tsx
+│       ├── skaff-next-steps-section.tsx
+│       └── skaff-auth-section.tsx          [Better Auth]
+├── lib/
+│   ├── site.ts                             site name, tagline, description, URL
+│   ├── hooks/                              one hook per file
+│   ├── utils/                              one helper per file ([shadcn/ui] cn.ts)
+│   ├── actions/                            server actions
+│   └── auth/                               [Better Auth]
+│       ├── server.ts                       Better Auth config on SQLite
+│       ├── client.ts                       React client
+│       ├── emulated-providers.ts
+│       └── emulated-accounts.ts            seeded accounts for local sign-in
+├── types/
+│   └── scaffold-manifest.ts                types for the overview page, delete with components/skaff
+├── .agents/                                skills for Codex
+├── .claude/
+│   ├── settings.json                       pre-approves scripts and agent-browser
+│   └── skills/                             skills for Claude Code
+├── .vscode/
+│   └── settings.json                       Oxlint + Oxfmt as default linter and formatter
+├── AGENTS.md                               rules for coding agents
+├── CLAUDE.md                               @AGENTS.md
+├── README.md                               generated for your app
+├── next.config.ts                          cacheComponents, authInterrupts ([Better Auth] withEmulate)
+├── oxlint.config.ts
+├── oxfmt.config.ts
+├── proxy.ts                                [Better Auth] redirects between /sign-in and /dashboard
+├── .env.local                              [Better Auth] AUTH_EMULATE=true and OAuth keys
+├── .gitignore
+├── package.json
+└── tsconfig.json
+```
 
 ## Contributing
 
