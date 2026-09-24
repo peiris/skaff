@@ -66,7 +66,7 @@
   "scripts": {
     "dev": "bun src/index.tsx",
     "typecheck": "tsc --noEmit",
-    "build": "esbuild src/index.tsx --bundle --platform=node --format=esm --target=node26 --jsx=automatic --jsx-import-source=@opentui/react --packages=external --loader:.txt=text --loader:.md=text --outfile=dist/index.js",
+    "build": "esbuild src/index.tsx --bundle --platform=node --format=esm --target=node26 --jsx=automatic --jsx-import-source=@opentui/react --packages=external --loader:.txt=text --loader:.md=text --minify --legal-comments=none --outfile=dist/index.js",
     "release": "bun run typecheck && npm version patch --no-git-tag-version && bun run build && npm publish --access public"
   },
   "engines": {
