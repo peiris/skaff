@@ -179,7 +179,7 @@ export function buildScaffoldSteps(config: ScaffoldConfig): ScaffoldStep[] {
           "vscode",
           "--quiet",
         ]),
-        write("write oxlint.config.ts and oxfmt.config.ts", () => writeLintConfig(dir, shadcn)),
+        write("write oxlint.config.ts, oxfmt.config.ts and .vscode/settings.json", () => writeLintConfig(dir, shadcn)),
         command([...pm.dlx, "ultracite@latest", "fix"]),
       ),
     ),

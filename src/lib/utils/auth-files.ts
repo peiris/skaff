@@ -299,6 +299,7 @@ const dashboardWelcomeSource = `import { AuthSignOutButton } from "@/components/
 import { auth } from "@/lib/auth/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import React from "react";
 
 export async function DashboardWelcome() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -306,13 +307,13 @@ export async function DashboardWelcome() {
     redirect("/sign-in");
   }
   return (
-    <>
+    <React.Fragment>
       <div className="flex flex-col gap-4">
         <h1 className="font-heading text-4xl font-semibold tracking-tight md:text-5xl">Welcome, {session.user.name}</h1>
         <p className="max-w-xl text-lg text-muted-foreground">Signed in as {session.user.email}.</p>
       </div>
       <AuthSignOutButton />
-    </>
+    </React.Fragment>
   );
 }
 `;

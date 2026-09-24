@@ -251,16 +251,17 @@ import { SkaffNextStepsSection } from "@/components/skaff/skaff-next-steps-secti
 import { SkaffScriptsSection } from "@/components/skaff/skaff-scripts-section";
 import { SkaffStackSection } from "@/components/skaff/skaff-stack-section";
 import { SkaffTreeSection } from "@/components/skaff/skaff-tree-section";
+import React from "react";
 
 export function SkaffOverview() {
   return (
-    <>
+    <React.Fragment>
       <SkaffHeroSection />
       <SkaffStackSection />
       <SkaffTreeSection />
       <SkaffScriptsSection />
       <SkaffNextStepsSection />${auth ? "\n      <SkaffAuthSection />" : ""}
-    </>
+    </React.Fragment>
   );
 }
 `;
