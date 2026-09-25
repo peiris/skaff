@@ -4,7 +4,7 @@ Thanks for helping out. This page covers how to run the CLI from source, where t
 
 ## Set up
 
-You need Node.js 26.10 or newer and [bun](https://bun.sh). Bun is only used for development; the published package runs on plain Node.
+You need Node.js 26.4 or newer and [bun](https://bun.sh). Bun is only used for development; the published package runs on plain Node.
 
 ```sh
 git clone https://github.com/peiris/skaff.git

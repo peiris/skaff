@@ -90,7 +90,7 @@ Using pnpm or bun? `pnpm dlx create-skaff@latest` and `bunx create-skaff@latest`
 
 ## Requirements
 
-- Node.js 26.10 or newer
+- Node.js 26.4 or newer
 - macOS, Linux, or Windows
 
 ### Always included
