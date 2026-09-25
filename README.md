@@ -1,6 +1,6 @@
 ![The skaff terminal wizard: project name, package manager, icon library and font answered, now picking what to set up](demo/skaff.png)
 
-# create-skaff
+# Skaff
 
 **Start a new Next.js app with the boring setup already done.**
 
