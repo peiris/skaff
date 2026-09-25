@@ -1,5 +1,5 @@
 export const palette = {
-  accent: "#a78bfa",
+  accent: "#2997ff",
   success: "#4ade80",
   warning: "#facc15",
   danger: "#f87171",
