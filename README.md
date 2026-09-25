@@ -7,14 +7,17 @@
 Run one command, answer a few questions, and get a ready-to-build project: styling, UI components, linting, error pages, sign-in, and AI coding assistant setup — all installed and connected for you.
 
 ```sh
-npx create-skaff@latest my-app
+npx create-skaff@latest
+pnpm dlx create-skaff@latest
+bunx create-skaff@latest
 ```
 
 Then:
 
 ```sh
-cd my-app
 npm run dev
+pnpm run dev
+bun run dev
 ```
 
 ---
@@ -27,27 +30,28 @@ Setting up a new Next.js project usually means an hour of installing packages, c
 
 **In every project:**
 
-- **Next.js + TypeScript** — the standard Next.js starter, using the App Router
-- **Tailwind CSS v4** — for styling, with extra spacing and text-size presets
-- **Ready-made pages** — a landing page, plus 404, error, and "access denied" pages
-- **Linting and formatting** — catches mistakes and keeps code tidy, with editor settings included
-- **AI assistant setup** — instructions and skills so Claude Code and Codex understand your project from day one
+- **[Next.js](https://nextjs.org) + [TypeScript](https://www.typescriptlang.org)** — via [`create-next-app@latest`](https://nextjs.org/docs/app/api-reference/cli/create-next-app): App Router, no `src/` folder, `@/*` import alias
+- **[Tailwind CSS v4](https://tailwindcss.com)** — with extra `@theme` tokens for breakpoints, container widths, and a text scale
+- **Ready-made pages** — root layout with your chosen [Google font](https://fonts.google.com), a landing page, and `not-found`, `forbidden`, `unauthorized`, `error` and `global-error` pages built on shared `ErrorPage` and `SectionContainer` components; `lib/site.ts` for site metadata
+- **Linting and formatting** — [Ultracite](https://ultracite.ai) ([Oxlint](https://oxc.rs/docs/guide/usage/linter) + [Oxfmt](https://oxc.rs/docs/guide/usage/formatter)) with the `anti-slop` plugin, React and Next.js rules, `.vscode/settings.json`, and a `typecheck` script
+- **AI assistant setup** — `AGENTS.md` with coding rules, `CLAUDE.md` pointing to it, `.claude/settings.json`, and [Claude Code](https://www.claude.com/product/claude-code) and [Codex](https://developers.openai.com/codex) skills from [`vercel-labs/next.js-experimental`](https://github.com/vercel-labs/next.js-experimental), [`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills) and [`vercel-labs/agent-browser`](https://github.com/vercel-labs/agent-browser)
+- **[agent-browser](https://agent-browser.dev)** — installed with its browser downloaded, so AI agents can test your app in a real browser
 - **A README for your new app** — explaining what's inside and how to run it
 
 **Optional extras** (all turned on by default, switch off what you don't need):
 
-| Extra | What it's for |
-| --- | --- |
-| shadcn/ui | A full set of good-looking UI components (buttons, dialogs, forms…) plus light/dark mode |
-| Better Auth | Sign in with Google or GitHub, with a protected dashboard page |
-| TanStack Query | Fetching and caching data from APIs |
-| Motion | Animations |
-| nuqs | Keeping things like filters and tabs in the page URL |
-| Tailwind Typography | Nice default styling for blog posts and long text |
+| Extra | What it's for | What gets installed and configured |
+| --- | --- | --- |
+| [shadcn/ui](https://ui.shadcn.com) | A full set of UI components (buttons, dialogs, forms…) plus light/dark mode | `shadcn init` with your preset, icons and font; every component added; aliases set to `lib/utils/cn` and `lib/hooks`; [`next-themes`](https://github.com/pacocoursey/next-themes); the shadcn lint plugin and agent skill |
+| [Better Auth](https://better-auth.com) | Sign in with Google or GitHub, with a protected dashboard page | `better-auth` with SQLite, `/sign-in` and `/dashboard` routes, a `proxy.ts` route guard, sign-in/sign-out components, `.env.local` keys, and `auth migrate` run for you |
+| [TanStack Query](https://tanstack.com/query) | Fetching and caching data from APIs | `@tanstack/react-query` + devtools, with a provider in the layout |
+| [Motion](https://motion.dev) | Animations | `motion` |
+| [nuqs](https://nuqs.dev) | Keeping things like filters and tabs in the page URL | `nuqs`, plus an `AGENTS.md` rule that URL state goes through it |
+| [Tailwind Typography](https://github.com/tailwindlabs/tailwindcss-typography) | Nice default styling for blog posts and long text | `@tailwindcss/typography`, registered in `app/globals.css` |
 
 ## Try sign-in without any setup
 
-If you turn on Better Auth, sign-in works straight away with **fake Google and GitHub accounts**. You don't need to create any OAuth apps just to try it out.
+If you turn on Better Auth, sign-in works straight away with **test Google and GitHub accounts**. You don't need to create any OAuth apps just to try it out.
 
 When you're ready for real sign-in:
 
@@ -60,11 +64,11 @@ When you're ready for real sign-in:
 You'll pick:
 
 - **Project name** — or `.` to use the current folder
-- **Package manager** — npm, pnpm, or bun
-- **Icons** — Lucide or Hugeicons
-- **Font** — Geist, Inter, Roboto, and more
+- **Package manager** — [npm](https://www.npmjs.com), [pnpm](https://pnpm.io), or [bun](https://bun.sh)
+- **Icons** — [Lucide](https://lucide.dev) or [Hugeicons](https://hugeicons.com)
+- **Font** — [Geist](https://vercel.com/font), [Inter](https://fonts.google.com/specimen/Inter), [Roboto](https://fonts.google.com/specimen/Roboto), and more
 - **Extras** — from the table above
-- **Component style** — a visual theme for shadcn/ui (only if you chose it)
+- **Component style** — a shadcn/ui preset: Maia, Nova, Vega, Lyra, Mira, Luma, Sera, or Rhea (only if you chose shadcn/ui)
 
 Press **Enter** to confirm and **Esc** to go back.
 
@@ -77,34 +81,10 @@ npx create-skaff@latest .          # sets up in the current folder
 npx create-skaff@latest --dry-run  # preview what would happen, without changing anything
 ```
 
-Using pnpm or bun? `pnpm dlx create-skaff@latest` and `bunx create-skaff@latest` work too.
-
 ## Requirements
 
-- Node.js 26.4 or newer
+- [Node.js](https://nodejs.org) 26.4 or newer
 - macOS, Linux, or Windows
-
-### Always included
-
-- **Next.js** via `create-next-app@latest` — App Router, TypeScript, no `src/` folder, `@/*` import alias
-- **Tailwind CSS v4** — extra `@theme` tokens for breakpoints, container widths, and a text scale
-- **App shell** — root layout with your chosen Google font, a `(marketing)` landing page, `not-found`, `forbidden`, `unauthorized`, `error` and `global-error` pages, shared `ErrorPage` and `SectionContainer` components, `lib/site.ts` for site metadata, and `lib/hooks`, `lib/utils`, `lib/actions` and `types` folders
-- **Ultracite** (Oxlint + Oxfmt) — with the `anti-slop` plugin, React and Next.js rules, `oxlint.config.ts`, `oxfmt.config.ts`, `.vscode/settings.json`, and a `typecheck` script
-- **AI agent config** — `AGENTS.md` with coding rules, `CLAUDE.md` pointing to it, `.claude/settings.json`, and skills for Claude Code and Codex from `vercel-labs/next.js-experimental`, `vercel-labs/agent-skills` and `vercel-labs/agent-browser`
-- **agent-browser** — dev dependency with its browser downloaded, so AI agents can test your app in a real browser
-
-### Optional
-
-| Extra | What gets installed and configured |
-| --- | --- |
-| Tailwind Typography | `@tailwindcss/typography`, registered in `app/globals.css` |
-| shadcn/ui | `shadcn init` with your preset, icons and font; every component added; aliases set to `lib/utils/cn` and `lib/hooks`; `next-themes`; the shadcn lint plugin and agent skill |
-| Motion | `motion` |
-| TanStack Query | `@tanstack/react-query` + devtools, with a provider in the layout |
-| nuqs | `nuqs`, plus an `AGENTS.md` rule that URL state goes through it |
-| Better Auth | `better-auth` with SQLite, Google and GitHub sign-in, `/sign-in` and `/dashboard` routes, a `proxy.ts` route guard, sign-in/sign-out components, `.env.local` keys, and `auth migrate` run for you |
-
-shadcn/ui presets: Maia, Nova, Vega, Lyra, Mira, Luma, Sera, Rhea.
 
 ## Project structure
 
