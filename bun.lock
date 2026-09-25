@@ -4,18 +4,17 @@
   "workspaces": {
     "": {
       "name": "draft",
-      "dependencies": {
-        "@opentui/core": "^0.5.11",
-        "@opentui/react": "^0.5.11",
-        "react": "^19.3.0",
-      },
       "devDependencies": {
         "@types/bun": "^1.4.2",
         "@types/react": "^19.3.0",
         "bun": "^1.4.2",
         "esbuild": "^0.28.2",
-        "playwright-core": "^1.63.0",
         "typescript": "^7.0.2",
+      },
+      "optionalDependencies": {
+        "@opentui/core": "^0.5.11",
+        "@opentui/react": "^0.5.11",
+        "react": "^19.3.0",
       },
     },
   },
@@ -181,8 +180,6 @@
     "get-east-asian-width": ["get-east-asian-width@1.7.0", "", {}, "sha512-XjH1AECxf0giL2V1aU8vKyRR2ppRUb5c0EvT7zuJTokQ74bNo52zOtghqdWIqrhUD79fo3x0WfKZdOqxF6LG1Q=="],
 
     "marked": ["marked@17.0.1", "", { "bin": { "marked": "bin/marked.js" } }, "sha512-boeBdiS0ghpWcSwoNm/jJBwdpFaMnZWRzjA6SkUMYb40SVaN1x7mmfGKp0jvexGcx+7y2La5zRZsYFZI6Qpypg=="],
-
-    "playwright-core": ["playwright-core@1.63.0", "", { "bin": { "playwright-core": "cli.js" } }, "sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg=="],
 
     "react": ["react@19.3.0", "", {}, "sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog=="],
 

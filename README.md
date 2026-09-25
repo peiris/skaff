@@ -7,7 +7,7 @@
 ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═╝      ╚═╝
 ```
 
-![create-skaff demo: run the command, answer the prompts, then open the generated project in VS Code](demo/skaff-demo.gif)
+![The skaff terminal wizard: project name, package manager, icon library and font answered, now picking what to set up](demo/skaff.png)
 
 # create-skaff
 
