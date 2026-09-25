@@ -69,15 +69,12 @@
     "build": "esbuild src/index.tsx --bundle --platform=node --format=esm --target=node26 --jsx=automatic --jsx-import-source=@opentui/react --packages=external --loader:.txt=text --loader:.md=text --minify --legal-comments=none --outfile=dist/index.js",
     "release": "bun run typecheck && npm version patch --no-git-tag-version && bun run build && npm publish --access public"
   },
-  "engines": {
-    "node": ">=26.9.0"
-  },
   "os": [
     "darwin",
     "linux",
     "win32"
   ],
-  "dependencies": {
+  "optionalDependencies": {
     "@opentui/core": "^0.5.11",
     "@opentui/react": "^0.5.11",
     "react": "^19.3.0"
