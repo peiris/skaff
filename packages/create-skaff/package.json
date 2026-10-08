@@ -1,0 +1,89 @@
+{
+  "name": "create-skaff",
+  "version": "0.0.33",
+  "description": "Interactive, batteries-included Next.js scaffolder: App Router, TypeScript, Tailwind CSS, shadcn/ui, Motion, Better Auth, Drizzle, Oxlint and agent-browser, picked from a terminal UI.",
+  "keywords": [
+    "create-skaff",
+    "skaff",
+    "scaffold",
+    "scaffolder",
+    "boilerplate",
+    "starter",
+    "template",
+    "generator",
+    "cli",
+    "tui",
+    "create-next-app",
+    "nextjs",
+    "next",
+    "next.js",
+    "app-router",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "tailwind",
+    "shadcn",
+    "shadcn-ui",
+    "motion",
+    "framer-motion",
+    "better-auth",
+    "drizzle",
+    "oxlint",
+    "agent-browser",
+    "bun",
+    "pnpm",
+    "vercel"
+  ],
+  "homepage": "https://github.com/peiris/skaff#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peiris/skaff.git"
+  },
+  "bugs": {
+    "url": "https://github.com/peiris/skaff/issues"
+  },
+  "author": {
+    "name": "Kasun Peiris",
+    "email": "peiris@kasun.io",
+    "url": "https://kasun.io"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "create-skaff": "bin/skaff.js",
+    "skaff": "bin/skaff.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "bun src/index.tsx",
+    "typecheck": "tsc --noEmit",
+    "build": "esbuild src/index.tsx --bundle --platform=node --format=esm --target=node26 --jsx=automatic --jsx-import-source=@opentui/react --packages=external --loader:.txt=text --loader:.md=text --minify --legal-comments=none --outfile=dist/index.js",
+    "release": "bun run typecheck && npm version patch --no-git-tag-version && bun run build && npm publish --access public"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "optionalDependencies": {
+    "@opentui/core": "^0.5.11",
+    "@opentui/react": "^0.5.11",
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.2",
+    "@types/react": "^19.3.0",
+    "bun": "^1.4.2",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

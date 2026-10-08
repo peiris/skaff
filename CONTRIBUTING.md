@@ -12,6 +12,12 @@ cd skaff
 bun install
 ```
 
+The repo is a turborepo. The CLI lives in `packages/create-skaff` and the marketing site in `apps/web`. Root scripts (`bun run dev`, `bun run typecheck`, `bun run build`) run every workspace; the commands below assume you are in `packages/create-skaff`.
+
+```sh
+cd packages/create-skaff
+```
+
 ## Run it
 
 ```sh
@@ -23,7 +29,7 @@ bun run dev -- my-app        # pre-fill the project name
 To try a real scaffold, run it from a scratch folder so you don't fill the repo with generated projects:
 
 ```sh
-cd /tmp && bun ~/path/to/skaff/src/index.tsx test-app
+cd /tmp && bun ~/path/to/skaff/packages/create-skaff/src/index.tsx test-app
 ```
 
 ## Check your work
@@ -67,7 +73,7 @@ The wizard is a React app drawn in the terminal with [OpenTUI](https://github.co
 
 ## Releasing
 
-Every push to `main` runs the publish workflow. It typechecks, bumps the patch version, builds, publishes to npm, and pushes the version commit back. There's nothing to do by hand.
+Every push to `main` that touches `packages/create-skaff` runs the publish workflow. It typechecks, bumps the patch version, builds, publishes to npm, and pushes the version commit back. There's nothing to do by hand.
 
 To publish from your machine instead:
 

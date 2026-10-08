@@ -1,5 +1,11 @@
 node_modules
 .DS_Store
+.turbo
 dist
-demo/ide/frames/
-demo/ide/frames.txt
+.next
+.vercel
+.env*
+*.tsbuildinfo
+next-env.d.ts
+packages/create-skaff/demo/ide/frames/
+packages/create-skaff/demo/ide/frames.txt
