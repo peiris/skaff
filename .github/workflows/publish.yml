@@ -43,7 +43,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          npm version patch -m "Release v%s"
+          version=$(node -p "const [a, b, c] = require('./package.json').version.split('.'); [a, b, +c + 1].join('.')")
+          npm pkg set version="$version"
+          git add package.json
+          git commit -m "Release v$version"
+          git tag -a "v$version" -m "Release v$version"
 
       - run: bun run build
 
