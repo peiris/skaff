@@ -59,7 +59,7 @@ jobs:
 
       - run: bun run build
 
-      - uses: charmbracelet/vhs-action@v2
+      - uses: charmbracelet/vhs-action@f6d7db07a432fcd3b06772628d36a57f96d95dcf # v2.1.1
         with:
           install-fonts: true
 
