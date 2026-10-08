@@ -21,3 +21,4 @@ Sleep 500ms
 Enter
 Sleep 1s
 Screenshot demo/skaff.png
+Sleep 1s

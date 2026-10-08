@@ -64,7 +64,12 @@ jobs:
           install-fonts: true
 
       - name: Refresh the README screenshot
-        run: bun run screenshot
+        run: |
+          bun run screenshot
+          if git diff --quiet -- demo/skaff.png; then
+            echo "demo/skaff.png was not regenerated" >&2
+            exit 1
+          fi
 
       - name: Commit and tag the release
         run: |
