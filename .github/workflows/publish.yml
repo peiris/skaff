@@ -39,10 +39,8 @@ jobs:
 
       - run: bun run typecheck
 
-      - name: Bump patch version
+      - name: Pick the release version
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           highest_tag=$(git tag -l 'v*' --sort=-v:refname | head -1 | sed 's/^v//')
           published=$(npm view create-skaff version 2>/dev/null || echo 0.0.0)
           version=$(node -p "
@@ -57,11 +55,24 @@ jobs:
             exit 1
           fi
           npm pkg set version="$version"
-          git add package.json
-          git commit -m "Release v$version"
-          git tag -a "v$version" -m "Release v$version"
+          echo "RELEASE_VERSION=$version" >> "$GITHUB_ENV"
 
       - run: bun run build
+
+      - uses: charmbracelet/vhs-action@v2
+        with:
+          install-fonts: true
+
+      - name: Refresh the README screenshot
+        run: bun run screenshot
+
+      - name: Commit and tag the release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json demo/skaff.png
+          git commit -m "Release v$RELEASE_VERSION"
+          git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION"
 
       - run: npm publish
 

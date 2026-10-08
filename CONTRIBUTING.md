@@ -73,7 +73,7 @@ The wizard is a React app drawn in the terminal with [OpenTUI](https://github.co
 
 ## Releasing
 
-Every push to `main` that touches `packages/create-skaff` runs the publish workflow. It typechecks, bumps the patch version, builds, publishes to npm, and pushes the version commit back. There's nothing to do by hand.
+Every push to `main` that touches `packages/create-skaff` runs the publish workflow. It typechecks, bumps the patch version, builds, re-renders the README screenshot from `demo/skaff.tape` with [VHS](https://github.com/charmbracelet/vhs), publishes to npm, and pushes the release commit back. To preview the screenshot locally, install `vhs` and run `bun run screenshot`. There's nothing to do by hand.
 
 To publish from your machine instead:
 
