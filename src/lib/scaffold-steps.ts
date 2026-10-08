@@ -171,7 +171,6 @@ export function buildScaffoldSteps(config: ScaffoldConfig): ScaffoldStep[] {
           "--frameworks",
           "react",
           "next",
-          ...(shadcn ? ["shadcn"] : []),
           "--js-plugins",
           "anti-slop",
           ...(shadcn ? ["@shadcn/lint"] : []),
