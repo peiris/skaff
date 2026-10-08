@@ -43,7 +43,19 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          version=$(node -p "const [a, b, c] = require('./package.json').version.split('.'); [a, b, +c + 1].join('.')")
+          highest_tag=$(git tag -l 'v*' --sort=-v:refname | head -1 | sed 's/^v//')
+          published=$(npm view create-skaff version 2>/dev/null || echo 0.0.0)
+          version=$(node -p "
+            const parse = (v) => v.split('.').map(Number);
+            const highest = ['$highest_tag', '$published', require('./package.json').version]
+              .filter(Boolean).map(parse)
+              .sort((a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2]).at(-1);
+            [highest[0], highest[1], highest[2] + 1].join('.')
+          ")
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "tag v$version already exists" >&2
+            exit 1
+          fi
           npm pkg set version="$version"
           git add package.json
           git commit -m "Release v$version"
